@@ -1,21 +1,35 @@
-"use server";
 import { prisma } from "@/client";
+import { User } from "@prisma/client";
 
-export interface User {
-  name: string;
-  email: string;
-  githubUsername: string;
-}
-export async function createUser(userData: User) {
+export async function createUser({
+  name,
+  email,
+  githubUsername,
+  authType,
+}: Partial<User>) {
   try {
-    await prisma.user.create({
-      data: userData,
+    const userInDb = await prisma.user.findUnique({
+      where: {
+        githubUsername,
+      },
     });
 
-    return {
-      success: true,
-      message: "user created successfully",
-    };
+    if (!userInDb) {
+      await prisma.user.create({
+        data: {
+          name: name!,
+          email: email!,
+          githubUsername: githubUsername!,
+          authType: authType!,
+        },
+      });
+
+      return {
+        success: true,
+        message: "user created successfully",
+      };
+    } else {
+    }
   } catch (e: any) {
     return {
       success: false,

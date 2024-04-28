@@ -1,4 +1,5 @@
 import { prisma } from "@/client";
+import { createUser } from "@/next-actions/user";
 import { NextAuthOptions } from "next-auth";
 import { GithubProfile } from "next-auth/providers/github";
 import GithubProvider from "next-auth/providers/github";
@@ -30,22 +31,19 @@ export const authOptions: NextAuthOptions = {
     GithubProvider({
       // @ts-ignore
       async profile(profile: GithubProfile) {
-        const userInDb = await prisma.user.findUnique({
-          where: {
-            githubUsername: profile.login,
-          },
+        const { name, email, login } = profile as {
+          name: string;
+          email: string;
+          login: string;
+        };
+
+        // creating user when user login in for first time
+        createUser({
+          name,
+          email,
+          githubUsername: login,
+          authType: "github",
         });
-        if (!userInDb) {
-          console.log("no user found");
-          await prisma.user.create({
-            data: {
-              name: profile.name || "",
-              email: profile.email || "",
-              githubUsername: profile.login,
-              authType: "github",
-            },
-          });
-        }
 
         return {
           ...profile,
