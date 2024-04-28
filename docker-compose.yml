@@ -1,0 +1,35 @@
+version: '4'
+
+services:
+  postgres:
+    image: postgres:9.6
+    container_name: postgress
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: faisal
+      POSTGRES_PASSWORD: fkk989
+      POSTGRES_DB: postgres
+    volumes:
+      - my-db:/var/lib/postgresql/data
+
+  app:
+    image: repo-tracker
+    container_name: repo-tracker-app
+    depends_on:
+      - postgres
+    ports:
+      - 3000:3000
+    environment:
+      DATABASE_URL: postgresql://faisal:fkk989@postgres/postgres?schema=public
+      GITHUB_ID: 086e04a17940f5e95b58
+      GITHUB_SECRET: 4a1f3fdc578569f37cbf13550bb87036b7c36c1f
+      NEXTAUTH_SECRET: Xb+Iqil6rwPUZqx6yKOxHsr6FRjCNHrYIN5sGznA6m4=
+      NEXTAUTH_URL: http://localhost:3000
+    volumes:
+      - .:/home/repo-tracker
+
+volumes:
+  my-db:
+    driver: local

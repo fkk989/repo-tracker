@@ -8,10 +8,20 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        "dull-gray": "#A1A1AA",
+        "common-gray": "#2C2C30",
+        "common-light-gray": "#71717A",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      screens: {
+        mobile: "500px",
+        tab: "1000px",
+        pc: "1400px",
       },
     },
   },
