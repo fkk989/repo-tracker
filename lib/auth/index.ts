@@ -1,9 +1,7 @@
-import { prisma } from "@/client";
 import { createUser } from "@/next-actions/user";
 import { NextAuthOptions } from "next-auth";
 import { GithubProfile } from "next-auth/providers/github";
 import GithubProvider from "next-auth/providers/github";
-
 declare module "next-auth" {
   interface Session {
     user: {
@@ -69,5 +67,8 @@ export const authOptions: NextAuthOptions = {
       session.user.imageUrl = token.imageUrl;
       return session;
     },
+  },
+  pages: {
+    signIn: "/",
   },
 };

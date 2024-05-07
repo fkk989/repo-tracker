@@ -24,10 +24,11 @@ export const UserDropdown = () => {
         onClick={handleClose}
         className="text-[22px] text-[#A1A1AA] hover:text-[#d2d2d9] cursor-pointer"
       />
+      {/* dropdown */}
       <div
         className={` ${
           !open && "scale0"
-        } absolute  top-[22px] w-[190px] bg-common-gray rounded-lg translate-x-[-35%]`}
+        } absolute  top-[22px] w-[190px] bg-common-gray rounded-lg translate-x-[-35%] origin-top`}
       >
         <div className="flex w-[100%] justify-between items-center text-[#7b7b7c]  box-border p-[5px] pl-[15px] pr-[15px]">
           <div className="font-bold text-[14px]">ACCOUNT</div>
@@ -46,7 +47,7 @@ export const UserDropdown = () => {
             alt="image"
             className="w-[32px] h-[32px] rounded-full"
           />
-          <div className="text-[14px]">{session.data?.user.userId}</div>
+          <div className="text-[14px]">{session.data.user.userId}</div>
         </div>
         <div className="  text-[16px] mt-[10px]">
           <ul>

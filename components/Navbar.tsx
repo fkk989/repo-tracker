@@ -4,14 +4,22 @@ import { useSession } from "next-auth/react";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import { TbRefresh } from "react-icons/tb";
 import { UserDropdown } from "./UserDropdown";
+import { usePathname, useRouter } from "next/navigation";
 
 export const Navbar = () => {
   const session = useSession();
+  const router = useRouter();
+  const pathname = usePathname();
 
   return (
-    <div className="w-screen h-[60px] flex justify-between items-center  border-b-[1px] border-[#ffffff0f] box-border pl-[30px] pr-[30px] pc:pl-[200px] pc:pr-[250px]">
-      <div className="flex justify-center items-center gap-[15px]">
-        <FaLocationCrosshairs className="text-[30px] text-dull-gray" />
+    <div className="w-screen h-[60px] bg-[#18181b] flex justify-between items-center  border-b-[1px] border-dull-gray box-border pl-[30px] pr-[30px] pc:pl-[200px] pc:pr-[250px] ">
+      <div
+        className="flex justify-center items-center gap-[15px] cursor-pointer"
+        onClick={() => {
+          router.push("/");
+        }}
+      >
+        <FaLocationCrosshairs className="text-[30px] text-gray-400" />
         <div className="pink-gradient bg-clip-text text-[25px] font-bold">
           Repo Tracker
         </div>
@@ -20,6 +28,16 @@ export const Navbar = () => {
         <div className="flex justify-center items-center gap-[20px]">
           <TbRefresh className="text-[22px] text-[#A1A1AA] hover:text-[#d2d2d9] cursor-pointer" />
           <UserDropdown />
+          {pathname === "/" && (
+            <button
+              className="w-[70px] h-[30px] bg-[#37996B] hover:bg-[#287752] rounded-md text-[11px]"
+              onClick={() => {
+                router.push("/dashboard");
+              }}
+            >
+              Dashboard
+            </button>
+          )}
         </div>
       ) : (
         <SigninBtn

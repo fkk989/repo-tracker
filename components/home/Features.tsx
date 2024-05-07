@@ -38,7 +38,10 @@ export const Features = () => {
       <div className="flex mt-[60px] mb-[100px] gap-[100px]">
         {featuresObj.map(({ icon, title, description }) => {
           return (
-            <div className="flex flex-col items-center justify-center w-[240px] gap-[20px]">
+            <div
+              key={title}
+              className="flex flex-col items-center justify-center w-[240px] gap-[20px]"
+            >
               <div className="text-[40px]">{icon}</div>
               <div className="flex flex-col gap-[10px] items-center">
                 <h1 className="text-[22px] font-bold">{title}</h1>
